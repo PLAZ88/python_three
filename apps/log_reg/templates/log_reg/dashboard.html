@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+</head>
+<body>
+<style>
+	#quotes, #favorite, #contribute {
+		border: solid;
+		border-color: pink;
+		padding: 15px;
+	}
+
+</style>
+	<a href="/logout">Logout</a>
+	<h3>Welcome, {{request.session.user }}!</h3>
+	<div id="quotes">
+		<h2>Quoteable Quotes</h2>
+		{% for quote in all_quotes %}
+		<br><br>
+		<b>{{quote.author}}</b>
+		{{quote.quote}}
+		Posted by: <a href="/quote/{{quote.creator.id}}">{{quote.creator.first_name}}</a>
+		<a href="/quote/repeatprocess/{{quote.id}}"><button>Add to my list!</button></a>
+		{% endfor %}
+	</div>
+	<br>
+	<br>
+	<div id="favorite">
+
+		<h2>Your Favorites</h2>
+
+		{% for favorite in favorites %}
+		<br><br>
+		<b>{{favorite.quote.author}}</b>
+		{{favorite.quote.quote}}
+		Posted by: <a href="/quote/{{favorite.quote.creator.id}}">{{favorite.quote.creator.first_name}}</a>
+		<a href="/quote/remove/{{favorite.id}}"><button>Remove from my list!</button></a>
+		{% endfor %}
+	</div>
+	<br><br>
+	<div id="contribute">
+		<h2>Contribute a quote</h2>
+		{% for message in messages %}
+			<ul>
+				<li>{{ message }}</li>
+			</ul>
+		{% endfor %}
+		<br><br>
+		<form action='/quote/process' method='POST'>
+		{% csrf_token %}
+			Quoted By:
+			<input type='text' name='author' id='author'>
+			Message:
+			<input type='text' name='quote' id='quote'>
+			<input id="submit" type='submit' value='Submit'>
+		</form>
+		<br><br>
+	</div>
+</body>
+</html>
+
+

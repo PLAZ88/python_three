@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Featured items</title>
+</head>
+<body>
+<style>
+	#red {
+		color: red;
+		font-weight: bold;
+	}
+</style>
+	<a href="/dashboard">Dashboard</a>
+	<a href="/logout">Logout</a>
+
+	<br><br>
+
+	{% for user in users %}
+	<h2>Posts by: {{user.first_name}}</h2>
+	<br><br>
+	{% endfor %}
+
+	Count: 
+	{% for total in totals %}
+	{{total.num_quotes}}
+	{% endfor %}
+	<br><br>
+
+	{% for quote in quotes %}
+	<span id="red">{{quote.author}}</span>
+	{{quote.quote}}
+	<br><br>
+	{% endfor %}
+
+</body>
+</html>
